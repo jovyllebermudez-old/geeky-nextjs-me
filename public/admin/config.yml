@@ -1,0 +1,158 @@
+backend:
+  name: git-gateway
+  # branch: main # Branch to update (optional; defaults to master)
+# This line should *not* be indented
+media_folder: "public/decap/images/uploads" # Media files will be stored in the repo under images/uploads
+public_folder: "/decap/images/uploads"
+
+# Please run "npx netlify-cms-proxy-server" for local backend
+local_backend: true
+
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "content/posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured Image", name: "thumbnail", widget: "image", "required":false }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "pages" # Used in routes, e.g., /admin/collections/blog
+    label: "Pages" # Used in the UI
+    folder: "content" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      
+  - label: "Links & Lists"
+    label_singular: "Link"
+    name: "data_links"
+    editor:
+        preview: false
+    files:
+    - label: "Page Menu"
+      name: "menu"
+      file: "/config/menu.json"
+      extension: "json"
+      format: "json"
+      fields:
+        - label: "Links"
+          label_singular: "Link"
+          name: "main"
+          widget: "list"
+          fields:
+            - {label: "name", name: "name", widget: "string"}
+            - label: "URL or file name"
+              name: "url"
+              widget: "string"
+              pattern: ['^(/|http)', "Must start with '/' (local path) or 'http' (absolute URL)" ]
+            - {label: "hasChildren", name: "hasChildren", widget: "boolean", default: false}
+            - label: "children"
+              name: "children"
+              widget: "list"
+              fields:
+                - {label: "name", name: "name", widget: "string"}
+                - label: "URL or file name"
+                  name: "url"
+                  widget: "string"
+                  pattern: ['^(/|http)', "Must start with '/' (local path) or 'http' (absolute URL)" ]
+
+# {
+#   "list": [
+#     {
+#       "title": "Article 1",
+#       "byline": "Author Authorino",
+#       "estimate": "5 minute read",
+#       "file": "/articles/example-article.html"
+#     },
+#     {
+#       "title": "Article 2",
+#       "byline": "The Site Editorial Staff",
+#       "estimate": "10 minute read",
+#       "file": "/articles/another-article.html"
+#     }
+#   ]
+# }
+
+# {
+#   "main": [
+#     {
+#       "name": "Home",
+#       "url": "/"
+#     },
+#     {
+#       "name": "About",
+#       "url": "/about"
+#     },
+#     {
+#       "name": "Elements",
+#       "url": "/elements"
+#     },
+#     {
+#       "name": "Contact",
+#       "url": "/contact"
+#     },
+#     {
+#       "name": "Pages",
+#       "url": "",
+#       "hasChildren": true,
+#       "children": [
+#         {
+#           "name": "Categories",
+#           "url": "/categories"
+#         }
+#       ]
+#     }
+#   ],
+#   "footer": [
+#     {
+#       "name": "Home",
+#       "url": "/"
+#     },
+#     {
+#       "name": "About",
+#       "url": "/about"
+#     },
+#     {
+#       "name": "Contact",
+#       "url": "/contact"
+#     },
+#     {
+#       "name": "Privacy Policy",
+#       "url": "#"
+#     }
+#   ]
+# }
+
+
+
+  # - name: "test1" # Used in routes, e.g., /admin/collections/test1
+  #   label: "Tests1" # Used in the UI
+  #   folder: "content/decap/posts/test" # The path to the folder where the documents are stored
+  #   create: true # Allow users to create new documents in this collection
+  #   slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+  #   fields: # The fields for each document, usually in front matter
+  #     - { label: "Layout", name: "layout", widget: "hidden", default: "testss" }
+  #     - { label: "Title", name: "title", widget: "string" }
+  #     - { label: "Publish Date", name: "date", widget: "datetime" }
+  #     - { label: "Featured Image", name: "thumbnail", widget: "image", "required":false }
+  #     - { label: "Body", name: "body", widget: "markdown" }
+
+  # - name: "projects" # Used in routes, e.g., /admin/collections/test1
+  #   label: "Projects" # Used in the UI
+  #   folder: "content/projects" # The path to the folder where the documents are stored
+  #   create: true # Allow users to create new documents in this collection
+  #   slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+  #   fields: # The fields for each document, usually in front matter
+  #     - { label: "Layout", name: "layout", widget: "hidden", default: "testss" }
+  #     - { label: "Title", name: "title", widget: "string" }
+  #     - { label: "Publish Date", name: "date", widget: "datetime" }
+  #     - { label: "Featured Image", name: "thumbnail", widget: "image", "required":false }
+  #     - { label: "Body", name: "body", widget: "markdown" }
